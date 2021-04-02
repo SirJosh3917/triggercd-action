@@ -1,4 +1,5 @@
 const core = require("@actions/core");
+const WebSocket = require("ws");
 
 const STDOUT_CHUNK_PREFIX = 0;
 const STDERR_CHUNK_PREFIX = 1;
@@ -10,10 +11,10 @@ try {
 
     websocket.onmessage = (e) => {
         if (typeof e.data === "string") {
-            console.error(e.data);
+            throw new Error(e.data);
         }
-        else if (e.data instanceof ArrayBuffer) {
-            const buffer = new Uint8Array(data);
+        else if (e.data instanceof Buffer) {
+            const buffer = new Uint8Array(e.data);
 
             if (buffer[0] === STDOUT_CHUNK_PREFIX) {
                 process.stdout.write(buffer.slice(1));
@@ -24,6 +25,9 @@ try {
             else {
                 throw new Error(`unsure how to handle buffer prefix: ${buffer[0]}`);
             }
+        }
+        else {
+            throw new Error(`unhandled message payload '${e.data}'`);
         }
     };
 
@@ -42,11 +46,11 @@ try {
     };
 
     websocket.onclose = (e) => {
-        console.log(`triggercd-action: websocket closed ${e}`);
+        console.log(`triggercd-action: websocket closed ${e.code}: ${e.reason}`);
 
         if (!e.wasClean) {
             console.error(`triggercd-action: unclean close`);
-            throw new Error(e);
+            throw new Error(e.reason);
         }
     };
 }
