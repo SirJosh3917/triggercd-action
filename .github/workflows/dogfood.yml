@@ -11,3 +11,4 @@ jobs:
         uses: ./
         with:
           url: ${{ secrets.URL }}
+          nonce: ${{ secrets.NONCE }}
