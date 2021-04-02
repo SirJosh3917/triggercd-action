@@ -1,0 +1,13 @@
+on: [push]
+
+jobs:
+  confirm_action_works:
+    runs-on: ubuntu-latest
+    name: A job that dogfoods this github action
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Trigger TriggerCD
+        uses: ./
+        with:
+          url: ${{ secrets.URL }}
