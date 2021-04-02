@@ -1,0 +1,12 @@
+name: 'Trigger TriggerCD'
+description: 'Github Action to trigger a TriggerCD run'
+inputs:
+  url:
+    description: 'The endpoint to run TriggerCD at'
+    required: true
+  nonce:
+    description: 'A secret key to send to the endpoint, used for verification/identification purposes'
+    required: false
+runs:
+  using: 'node12'
+  main: 'index.js'

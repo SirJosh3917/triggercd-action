@@ -1,0 +1,12 @@
+{
+  "name": "triggercd-action",
+  "version": "0.1.0",
+  "description": "Github Action to trigger a TriggerCD run.",
+  "main": "index.js",
+  "repository": "https://github.com/SirJosh3917/triggercd-action.git",
+  "author": "SirJosh3917 <SirJosh3917@users.noreply.github.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.2.6"
+  }
+}
